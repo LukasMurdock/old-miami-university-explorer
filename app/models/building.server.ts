@@ -1,4 +1,4 @@
-import { Building } from "@prisma/client";
+// import { Building } from "@prisma/client";
 import { prisma } from "~/db.server";
 
 type ApiBuilding = {

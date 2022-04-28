@@ -1,8 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { ApiCourseSection, ApiTerm } from "./ws.miamioh.edu";
-const prisma = new PrismaClient();
 import { subjects } from "./subjects";
 import axios from "axios";
+
+const prisma = new PrismaClient();
 
 async function fetchSubjectSections({
   campusCode,
