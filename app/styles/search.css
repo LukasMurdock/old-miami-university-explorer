@@ -1,0 +1,34 @@
+form {
+  position: relative;
+  width: 100%;
+  padding: 15px;
+  text-align: left;
+  background-color: #c41230;
+  border: 1px solid #7c0c1f;
+  border-radius: 10px;
+  box-sizing: border-box;
+  /* tufte */
+  width: 55%;
+}
+
+form input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 48px;
+  font-size: 133%;
+  line-height: 30px;
+  outline: none;
+  padding: 8px 12px 8px 12px;
+  border: 1px solid #7c0c1f;
+  background-color: #ffffff;
+  border-radius: 8px;
+  font-family: et-book, Palatino, "Palatino Linotype", "Palatino LT STD",
+    "Book Antiqua", Georgia, serif;
+}
+
+/* tufte */
+@media (max-width: 760px) {
+  form {
+    width: 100%;
+  }
+}
