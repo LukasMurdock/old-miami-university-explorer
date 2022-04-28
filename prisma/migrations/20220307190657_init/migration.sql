@@ -24,37 +24,6 @@ CREATE TABLE "Note" (
     CONSTRAINT "Note_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- CreateTable
-CREATE TABLE "Building" (
-    "code" TEXT NOT NULL PRIMARY KEY,
-    "name" TEXT NOT NULL,
-    "address" TEXT NOT NULL,
-    "city" TEXT NOT NULL,
-    "zip" TEXT NOT NULL,
-    "state" TEXT NOT NULL,
-    "campusCode" TEXT NOT NULL,
-    "latitude" TEXT NOT NULL,
-    "longitute" TEXT NOT NULL,
-    "imageURL" TEXT NOT NULL,
-    "wifi" BOOLEAN NOT NULL,
-    "functionCode" TEXT NOT NULL
-);
-
--- CreateTable
-CREATE TABLE "CourseInstance" (
-    "id" TEXT NOT NULL PRIMARY KEY,
-    "campus" TEXT NOT NULL,
-    "subject" TEXT NOT NULL,
-    "code" TEXT NOT NULL,
-    "title" TEXT NOT NULL,
-    "term" TEXT NOT NULL,
-    "section" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
-    "instructionType" TEXT NOT NULL,
-    "credits" REAL NOT NULL,
-    "enrollmentMax" INTEGER NOT NULL
-);
-
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 

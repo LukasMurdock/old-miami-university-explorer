@@ -95,12 +95,8 @@ export async function seedCourses() {
       for (const section of courseSections) {
         console.log(section.courseSubjectCode + " " + section.courseNumber);
 
-        await prisma.courseInstance.upsert({
-          where: {
-            id: section.courseId, // 22472
-          },
-          update: {},
-          create: {
+        await prisma.courseInstance.create({
+          data: {
             id: section.courseId, // 22472
             campus: section.campusCode, // O
             subject: section.courseSubjectCode, // CSE
@@ -114,22 +110,6 @@ export async function seedCourses() {
             enrollmentMax: Number(section.enrollmentCountMax), // 150
           },
         });
-
-        // await prisma.courseInstance.create({
-        //   data: {
-        //     id: section.courseId, // 22472
-        //     campus: section.campusCode, // O
-        //     subject: section.courseSubjectCode, // CSE
-        //     code: section.courseNumber, // 252, 111L Not a Number
-        //     term: section.academicTerm, // 202220
-        //     title: section.courseTitle ?? "", // Web Application Programming
-        //     section: section.courseSectionCode, // A
-        //     description: section.courseDescription ?? "", // words
-        //     instructionType: section.instructionalTypeDescription, // Lecture
-        //     credits: Number(section.creditHoursHigh), // 3
-        //     enrollmentMax: Number(section.enrollmentCountMax), // 150
-        //   },
-        // });
       }
     }
   }
