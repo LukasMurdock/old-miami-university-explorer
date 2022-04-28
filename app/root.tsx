@@ -28,6 +28,8 @@ export const links: LinksFunction = () => {
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Miami University Explorer",
+  description:
+    "Easily explore and find classes and buildings at Miami University.",
   viewport: "width=device-width,initial-scale=1",
 });
 

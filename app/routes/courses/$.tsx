@@ -1,6 +1,10 @@
 import { CourseInstance } from "@prisma/client";
 import { prisma } from "~/db.server";
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useCatch, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
@@ -24,6 +28,13 @@ type LoaderData = {
   code: string;
   section?: string;
 };
+
+export const meta: MetaFunction = ({ data }: { data: LoaderData }) => ({
+  title: `${data.subject} ${data.code} ${
+    data.section ?? ""
+  } | Miami University Explorer`,
+  description: data.courseInstances[0].description,
+});
 
 // 20180
 export const loader: LoaderFunction = async ({ request, params }) => {

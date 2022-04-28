@@ -1,6 +1,8 @@
 import type { CourseInstance } from "@prisma/client";
-import { json, LoaderFunction, redirect } from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
+import { Params } from "react-router";
 import invariant from "tiny-invariant";
 import {
   getCourseInstances,
@@ -31,6 +33,17 @@ type LoaderData = {
   //     sections: CourseInstance[];
   //   }[];
 };
+
+export const meta: MetaFunction = ({
+  data,
+  params,
+}: {
+  data: LoaderData;
+  params: Params<string>;
+}) => ({
+  title: `${params.subjectCode} | Miami University Explorer`,
+  description: `See ${params.subjectCode} courses at Miami University.`,
+});
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.subjectCode, "params not found");
