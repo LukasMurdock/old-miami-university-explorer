@@ -16,7 +16,7 @@ model User {
 
     password Password?
     notes    Note[]
-    courses  String // stringified course format
+    // courses  String // stringified course format
 }
 
 model Password {
