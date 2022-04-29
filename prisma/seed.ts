@@ -57,7 +57,7 @@ async function seed() {
   //     },
   //   });
 
-  //   await seedCourses();
+  await seedCourses();
 
   console.log(`Database has been seeded. 🌱`);
 }

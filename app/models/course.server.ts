@@ -1,4 +1,6 @@
 import { CourseInstance } from "@prisma/client";
+import { subjects } from "prisma/subjects";
+import { ApiCourseSection } from "prisma/ws.miamioh.edu";
 import { prisma } from "~/db.server";
 export type { CourseInstance } from "@prisma/client";
 
@@ -23,6 +25,62 @@ export async function getUniqueSubjects() {
     distinct: ["subject"],
   });
   return uniqueSubjects;
+}
+
+async function fetchSubjectSections({
+  campusCode,
+  termId,
+  subjectCode,
+  limit,
+}: {
+  campusCode: string;
+  termId: string;
+  subjectCode: string;
+  limit?: number;
+}) {
+  const subjectCodeEndpoint = `http://ws.miamioh.edu/courseSectionV2/${termId}.json?campusCode=${campusCode}&courseSubjectCode=${subjectCode}${
+    limit ? `&limit=${limit}` : ""
+  }`;
+
+  const response = await fetch(subjectCodeEndpoint);
+  const { courseSections }: { courseSections: ApiCourseSection[] } =
+    await response.json();
+  return courseSections;
+}
+
+export async function seedCoursesFromTerm(termId: string) {
+  for (const subjectCode of subjects) {
+    const courseSections = await fetchSubjectSections({
+      termId,
+      campusCode: "O",
+      subjectCode,
+      limit: 2,
+    });
+
+    for (const section of courseSections) {
+      console.log(section.courseSubjectCode + " " + section.courseNumber);
+
+      await prisma.courseInstance.upsert({
+        where: {
+          id: section.courseId, // 22472
+        },
+        update: {},
+        create: {
+          id: section.courseId, // 22472
+          campus: section.campusCode, // O
+          subject: section.courseSubjectCode, // CSE
+          code: section.courseNumber, // 252, 111L Not a Number
+          term: section.academicTerm, // 202220
+          title: section.courseTitle ?? "", // Web Application Programming
+          section: section.courseSectionCode, // A
+          description: section.courseDescription ?? "", // words
+          instructionType: section.instructionalTypeDescription, // Lecture
+          credits: Number(section.creditHoursHigh), // 3
+          enrollmentMax: Number(section.enrollmentCountMax), // 150
+        },
+      });
+    }
+  }
 }
 
 export async function getRandomCourse() {
