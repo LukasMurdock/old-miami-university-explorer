@@ -23,6 +23,11 @@ function getRandomInt(min: number, max: number) {
 export async function getUniqueSubjects() {
   const uniqueSubjects = await prisma.courseInstance.findMany({
     distinct: ["subject"],
+    orderBy: [
+      {
+        subject: "asc",
+      },
+    ],
   });
   return uniqueSubjects;
 }
@@ -153,6 +158,14 @@ export function getCourseInstances({
       ...(code && { code }),
       ...(section && { section }),
     },
+    orderBy: [
+      {
+        subject: "asc",
+      },
+      {
+        code: "asc",
+      },
+    ],
   });
 }
 
