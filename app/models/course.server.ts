@@ -54,7 +54,7 @@ export async function seedCoursesFromTerm(termId: string) {
       termId,
       campusCode: "O",
       subjectCode,
-      limit: 2,
+      //   limit: 2,
     });
 
     for (const section of courseSections) {
