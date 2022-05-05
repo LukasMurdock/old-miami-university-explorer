@@ -1,5 +1,5 @@
 import { Building } from "@prisma/client";
-import { useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData, useParams } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import invariant from "tiny-invariant";
@@ -12,6 +12,7 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.buildingCode, "params not found");
   const building = await getBuilding(params.buildingCode);
+  console.log(building);
   if (!building) {
     throw new Response("Not Found", { status: 404 });
   }
@@ -47,6 +48,16 @@ export default function BuildingCode() {
           <img src={building.imageURL} alt={building.name} loading="lazy" />
         </figure>
       )}
+    </section>
+  );
+}
+
+export function CatchBoundary() {
+  const params = useParams();
+  return (
+    <section>
+      <h2>We couldn't find that building!</h2>
+      <p>You searched for building “{params.buildingCode}”</p>
     </section>
   );
 }

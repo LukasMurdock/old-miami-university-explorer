@@ -1,7 +1,7 @@
 import type { CourseInstance } from "@prisma/client";
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useParams } from "@remix-run/react";
 import { Params } from "react-router";
 import invariant from "tiny-invariant";
 import {
@@ -62,7 +62,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     subject: params.subjectCode,
   });
 
-  if (!courseInstances) {
+  if (courseInstances.length === 0) {
     throw new Response("Not Found", { status: 404 });
   }
 
@@ -158,5 +158,15 @@ export function CourseSectionsList({
         </li>
       ))}
     </ul>
+  );
+}
+
+export function CatchBoundary() {
+  const params = useParams();
+  return (
+    <section>
+      <h2>We couldn't find that subject code!</h2>
+      <p>You searched for subject code “{params.subjectCode}”</p>
+    </section>
   );
 }

@@ -17,14 +17,14 @@ type ApiBuilding = {
 };
 
 export async function getBuilding(buildingSearch: string) {
-  const buildingCodeLength = 3;
-
-  if (buildingSearch.length === buildingCodeLength) {
-    return await prisma.building.findFirst({
-      where: {
-        code: buildingSearch,
-      },
-    });
+  // building codes are not always of length 3, e.g., PSYC
+  const codeSearch = await prisma.building.findFirst({
+    where: {
+      code: buildingSearch,
+    },
+  });
+  if (codeSearch) {
+    return codeSearch;
   } else {
     return await prisma.building.findFirst({
       where: {
@@ -32,6 +32,22 @@ export async function getBuilding(buildingSearch: string) {
       },
     });
   }
+
+  //   const buildingCodeLength = 3;
+
+  //   if (buildingSearch.length === buildingCodeLength) {
+  //     return await prisma.building.findFirst({
+  //       where: {
+  //         code: buildingSearch,
+  //       },
+  //     });
+  //   } else {
+  //     return await prisma.building.findFirst({
+  //       where: {
+  //         name: buildingSearch,
+  //       },
+  //     });
+  //   }
 }
 
 export async function getBuildingsSorted() {

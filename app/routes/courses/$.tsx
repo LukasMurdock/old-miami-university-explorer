@@ -6,7 +6,7 @@ import type {
   MetaFunction,
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, useCatch, useLoaderData } from "@remix-run/react";
+import { Form, useCatch, useLoaderData, useParams } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import {
   getCourseInstances,
@@ -30,10 +30,10 @@ type LoaderData = {
 };
 
 export const meta: MetaFunction = ({ data }: { data: LoaderData }) => ({
-  title: `${data.subject} ${data.code} ${
-    data.section ?? ""
+  title: `${data?.subject ?? ""} ${data?.code ?? ""} ${
+    data?.section ?? ""
   } | Miami University Explorer`,
-  description: data.courseInstances[0].description,
+  description: data?.courseInstances[0]?.description ?? "No course here",
 });
 
 // 20180
@@ -88,7 +88,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   // subject-code page (show section deets)
   // subject-code-section page (show all instance deets)
 
-  if (!courseInstances) {
+  if (courseInstances.length === 0) {
     throw new Response("Not Found", { status: 404 });
   }
 
@@ -192,11 +192,11 @@ export function ErrorBoundary({ error }: { error: Error }) {
 }
 
 export function CatchBoundary() {
-  const caught = useCatch();
-
-  if (caught.status === 404) {
-    return <div>Course not found</div>;
-  }
-
-  throw new Error(`Unexpected caught response with status: ${caught.status}`);
+  const params = useParams();
+  return (
+    <section>
+      <h2>We couldn't find that course!</h2>
+      <p>You searched for course “{params["*"]}”</p>
+    </section>
+  );
 }
