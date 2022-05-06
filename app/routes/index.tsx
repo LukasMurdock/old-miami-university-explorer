@@ -11,8 +11,8 @@ export default function Index() {
       <p className="subtitle">Lukas Murdock</p>
       <section>
         <p>
-          Miami University Explorer provides an easy way to explore classes at
-          Miami University.
+          Miami University Explorer provides an easy way to explore classes and
+          buildings at Miami University.
         </p>
       </section>
       <section>
