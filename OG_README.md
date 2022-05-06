@@ -1,23 +1,12 @@
-# Miami University Explorer
-
-Miami University Explorer provides an easy way to explore classes and buildings at Miami University.
-
-This branch uses Remix with the following routes:
-
-- `/buildings` Show all buildings
-- `/buildings/load` Trigger a server-side fetch of all buildings and load into database
-- `/buildings/$buildingCode` View a building (e.g., HUG)
-- `/courses` Show all course subject codes
-- `/courses/$subjectCode` Show all courses in a subject (e.g., CSE)
-- `/courses/$.` [Catch-all route](https://remix.run/docs/en/v1/api/conventions#splat-routes) to search for specific course codes or sections
-- `/courses/load` Trigger a server-side fetch of all courses in a given term
-- `/courses/random` Redirect to a random course
-
----
-
 # Remix Indie Stack
 
+![The Remix Indie Stack](https://repository-images.githubusercontent.com/465928257/a241fa49-bd4d-485a-a2a5-5cb8e4ee0abf)
+
 Learn more about [Remix Stacks](https://remix.run/stacks).
+
+```
+npx create-remix --template remix-run/indie-stack
+```
 
 ## What's in the stack
 
